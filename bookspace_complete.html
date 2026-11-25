@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#17152f">
+  <title> IT'S MY  BookSpace Not A F**K'* PAGE  | Digital Library BRO'S </title>
+  <style>
+    :root {
+      --ink:#211d3b; --muted:#716d85; --purple:#7657e8; --pink:#f36aa7;
+      --blue:#3875d5; --surface:#fff; --line:#ece9f5;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);
+      background:linear-gradient(135deg,#f8f5ff 0%,#fff7fb 48%,#f1f8ff 100%);min-height:100vh}
+    a{color:inherit;text-decoration:none}
+    button,input,select{font:inherit}
+    .navbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;
+      gap:20px;padding:17px max(5%,calc((100% - 1180px)/2));background:rgba(255,255,255,.88);
+      backdrop-filter:blur(16px);border-bottom:1px solid rgba(230,225,244,.8)}
+    .logo{font-weight:900;font-size:1.35rem;letter-spacing:-.6px;color:#282044;display:flex;align-items:center;gap:10px}
+    .logo-mark{width:38px;height:38px;display:grid;place-items:center;border-radius:13px;color:#fff;
+      background:linear-gradient(135deg,#7957ed,#e45d9e);box-shadow:0 7px 18px #9270e64a}
+    nav{display:flex;align-items:center;gap:25px;color:#615b77;font-weight:650;font-size:.94rem}
+    nav a:hover{color:var(--purple)}
+    .nav-cta{background:#282044;color:#fff;padding:10px 16px;border-radius:12px}
+    .hero-wrap{padding:34px 5% 15px}
+    .hero{max-width:1180px;min-height:390px;margin:auto;position:relative;overflow:hidden;border-radius:30px;
+      color:#fff;background:linear-gradient(115deg,#39246f,#7657e8 55%,#ec70a8);
+      box-shadow:0 22px 55px #6345a52b}
+    .slide{position:absolute;inset:0;display:flex;align-items:center;padding:55px 8%;opacity:0;
+      transform:translateX(22px);transition:opacity .65s ease,transform .65s ease;pointer-events:none}
+    .slide.active{opacity:1;transform:translateX(0);pointer-events:auto}
+    .slide:before,.slide:after{content:"";position:absolute;border-radius:50%;pointer-events:none}
+    .slide:before{width:390px;height:390px;right:5%;top:-145px;background:#ffffff17}
+    .slide:after{width:260px;height:260px;right:23%;bottom:-180px;background:#ffb5d42b}
+    .slide-content{position:relative;z-index:2;max-width:600px}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;background:#ffffff22;border:1px solid #ffffff38;
+      border-radius:99px;padding:8px 13px;font-size:.75rem;font-weight:800;letter-spacing:1.4px;text-transform:uppercase}
+    .slide h1{font-size:clamp(2.5rem,5.5vw,4.5rem);line-height:1.04;letter-spacing:-2px;margin:20px 0 14px}
+    .slide p{max-width:510px;color:#f0eaff;font-size:1.05rem;line-height:1.7;margin-bottom:25px}
+    .hero-btn,.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;cursor:pointer;
+      font-weight:800;border-radius:12px;padding:13px 19px;transition:.2s}
+    .hero-btn{background:#fff;color:#5138a7}
+    .hero-btn:hover,.btn:hover{transform:translateY(-2px);box-shadow:0 9px 20px #2213442b}
+    .slide-two{background:linear-gradient(115deg,#145b73,#318fb1 55%,#66c6c2)}
+    .slide-three{background:linear-gradient(115deg,#7c315f,#d35491 55%,#f5a66c)}
+    .slide-controls{position:absolute;z-index:5;bottom:24px;left:8%;display:flex;align-items:center;gap:10px}
+    .slide-arrow{width:36px;height:36px;border:1px solid #ffffff70;background:#ffffff20;color:#fff;border-radius:50%;cursor:pointer}
+    .slide-arrow:hover{background:#ffffff40}
+    .dots{display:flex;gap:7px;margin-left:6px}
+    .dot{width:8px;height:8px;border:0;border-radius:99px;background:#ffffff70;cursor:pointer;transition:.2s}
+    .dot.active{width:24px;background:#fff}
+    .hero-art{position:absolute;right:9%;top:50%;transform:translateY(-50%);z-index:1;width:250px;height:250px;
+      display:grid;place-items:center;font-size:8rem;filter:drop-shadow(0 18px 18px #21113b44)}
+    .content{max-width:1180px;margin:52px auto;padding:0 5%}
+    .section-top{display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:23px}
+    .section-kicker{color:#8a70dc;font-weight:850;font-size:.75rem;letter-spacing:1.7px;text-transform:uppercase}
+    h2{font-size:clamp(1.8rem,3vw,2.35rem);letter-spacing:-1px;margin:7px 0}
+    .section-top p{color:var(--muted)}
+    #bookCount{font-weight:800;color:#604bb7;background:#eee9ff;padding:9px 13px;border-radius:99px;white-space:nowrap}
+    .filters{display:flex;gap:12px;margin-bottom:24px}
+    .search-box{position:relative;flex:1}
+    .search-box span{position:absolute;left:15px;top:50%;transform:translateY(-50%);font-size:1.1rem}
+    .filters input,.filters select{width:100%;border:1px solid #e6e1f1;background:#fff;border-radius:13px;
+      padding:14px 15px;color:var(--ink);outline:none;box-shadow:0 5px 16px #47336b08}
+    .filters input{padding-left:45px}
+    .filters input:focus,.filters select:focus{border-color:#8768ef;box-shadow:0 0 0 3px #9c83f022}
+    .filters select{max-width:230px}
+    .book-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:21px}
+    .book-card{background:#fff;border:1px solid #eeeaf5;border-radius:19px;overflow:hidden;
+      box-shadow:0 8px 24px #38245b0b;transition:transform .25s,box-shadow .25s}
+    .book-card:hover{transform:translateY(-7px);box-shadow:0 18px 35px #38245b18}
+    .cover-wrap{height:205px;padding:18px;display:grid;place-items:center;position:relative;overflow:hidden}
+    .cover-wrap:before{content:"";position:absolute;width:170px;height:170px;border-radius:50%;background:#ffffff27;right:-55px;top:-65px}
+    .cover-emoji{font-size:5.2rem;filter:drop-shadow(0 10px 8px #0002);position:relative}
+    .cover-label{position:absolute;left:15px;bottom:13px;color:#fff;font-size:.68rem;font-weight:900;letter-spacing:1.5px}
+    .book-info{padding:18px}
+    .category{display:inline-block;background:#f0ebff;color:#7355d8;border-radius:99px;padding:6px 10px;font-size:.69rem;font-weight:850}
+    .book-info h3{font-size:1.1rem;margin:12px 0 5px}
+    .author{color:#8a8499;font-size:.83rem;margin-bottom:10px}
+    .description{color:#716d80;font-size:.84rem;line-height:1.55;min-height:52px}
+    .card-actions{display:flex;gap:8px;margin-top:17px}
+    .btn{font-size:.82rem;padding:11px 12px;flex:1}
+    .btn-primary{background:linear-gradient(120deg,#7959e8,#9a68e9);color:#fff}
+    .btn-secondary{background:#f1eff8;color:#5f5481}
+    .empty-state{display:none;text-align:center;padding:45px 15px;color:#777}
+    .reader-section{display:none;margin-top:55px;background:#fff;border:1px solid var(--line);border-radius:22px;padding:23px;
+      box-shadow:0 12px 35px #38245b0d}
+    .reader-section.show{display:block}
+    .reader-head{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:18px}
+    .reader-head h2{font-size:1.45rem}
+    .reader-head p{color:var(--muted);font-size:.9rem}
+    .reader-actions{display:flex;gap:9px;flex-wrap:wrap}
+    .pdf-frame{width:100%;height:680px;border:0;border-radius:13px;background:#f0eef5}
+    .reader-placeholder{height:260px;display:grid;place-items:center;text-align:center;color:#79738a;background:#f7f5fc;border-radius:14px;padding:25px}
+    .reader-placeholder strong{display:block;color:#30264f;margin-bottom:8px}
+    footer{margin-top:70px;padding:38px 5%;text-align:center;color:#e8e2ff;background:#211a3b}
+    footer .footer-logo{font-size:1.25rem;font-weight:900;margin-bottom:8px}
+    footer p{font-size:.85rem;color:#d0c7eb;margin-top:7px}
+    .back-top{display:inline-block;margin-top:17px;color:#fff;background:#ffffff18;padding:9px 14px;border-radius:10px;font-size:.8rem}
+    @media(max-width:950px){.book-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.hero-art{right:5%;opacity:.75}}
+    @media(max-width:700px){.navbar{padding:13px 5%}nav{gap:13px;font-size:.82rem}.nav-cta{display:none}
+      .hero-wrap{padding:20px 4% 0}.hero{min-height:410px;border-radius:22px}.slide{padding:40px 7% 80px}
+      .slide h1{font-size:2.7rem}.slide p{font-size:.94rem;max-width:90%}.hero-art{font-size:5rem;right:7%;top:auto;bottom:50px;transform:none;opacity:.35}
+      .slide-controls{left:7%}.content{padding:0 4%;margin:42px auto}.book-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+      .cover-wrap{height:165px}.cover-emoji{font-size:4rem}.book-info{padding:13px}.book-info h3{font-size:.98rem}
+      .description{font-size:.78rem;min-height:65px}.btn{font-size:.74rem;padding:10px 7px}.filters{flex-direction:column}
+      .filters select{max-width:none}.section-top{align-items:start}.pdf-frame{height:560px}.reader-section{padding:14px}}
+    @media(max-width:420px){nav a:first-child{display:none}.book-grid{grid-template-columns:1fr 1fr}.cover-wrap{height:145px}
+      .card-actions{flex-direction:column}.description{min-height:78px}.reader-head{align-items:flex-start;flex-direction:column}}
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <a class="logo" href="#" aria-label="BookSpace home"><span class="logo-mark">📚</span> BookSpace</a>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#library">Library</a>
+      <a href="#about">About</a>
+      <a class="nav-cta" href="#library">Explore Books for more & more things bor's   ↗</a>
+    </nav>
+  </header>
+
+  <section class="hero-wrap">
+    <div class="hero" aria-label="Featured library slides">
+      <article class="slide active">
+        <div class="slide-content">
+          <span class="eyebrow">✦ MY DIGITAL READING SPACE</span>
+          <h1>Discover.<br>Read. Explore Bro's.</h1>
+          <p>Big ideas begin with one page. Find your next favourite book and learn something new every day.</p>
+          <a class="hero-btn" href="#library">Explore the library & Read bor's &nbsp; →</a>
+        </div>
+        <div class="hero-art" aria-hidden="true">📚</div>
+      </article>
+      <article class="slide slide-two">
+        <div class="slide-content">
+          <span class="eyebrow">☁ LEARN WITHOUT LIMITS AND WHAT F**K </span>
+          <h1>Build skills.<br>Shape your future with me bro's .</h1>
+          <p>Explore programming, cloud computing and technology resources in one simple place.</p>
+          <a class="hero-btn" href="#library">Find YOU'RE PEACE IN A learning book&nbsp; →</a>
+        </div>
+        <div class="hero-art" aria-hidden="true">💡</div>
+      </article>
+      <article class="slide slide-three">
+        <div class="slide-content">
+          <span class="eyebrow">♥ A LITTLE READING, EVERY DAY 😎</span>
+          <h1>Turn pages Bro's.<br>Grow every day.</h1>
+          <p>Search the collection, open a PDF in the reader and keep your learning journey moving bro's .</p>
+          <a class="hero-btn" href="#library">Start reading bro's &nbsp; →</a>
+        </div>
+        <div class="hero-art" aria-hidden="true">🚀</div>
+      </article>
+      <div class="slide-controls">
+        <button class="slide-arrow" id="prevSlide" aria-label="Previous slide">‹</button>
+        <button class="slide-arrow" id="nextSlide" aria-label="Next slide">›</button>
+        <div class="dots" id="slideDots" aria-label="Choose slide"></div>
+      </div>
+    </div>
+  </section>
+
+  <main class="content" id="library">
+    <div class="section-top">
+      <div><span class="section-kicker">THE COLLECTION</span><h2>Explore My  library</h2>
+        <p>Find a book, open it and learn at your own risk 😏.</p></div>
+      <span id="bookCount">4 Books that's all bro's 😼 </span>
+    </div>
+
+    <div class="filters">
+      <div class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Search by book title or author..." aria-label="Search books"></div>
+      <select id="categoryFilter" aria-label="Filter by category">
+        <option value="all">All categories</option>
+        <option value="Programming">Programming</option>
+        <option value="Cloud Computing">Cloud Computing</option>
+        <option value="Operating Systems">Operating Systems</option>
+        <option value="Education">Education</option>
+      </select>
+    </div>
+
+    <div class="book-grid" id="bookGrid"></div>
+    <div class="empty-state" id="noBooks"><h3>No books found 📖</h3><p>Try another title or category.</p></div>
+
+    <section class="reader-section" id="readerSection">
+      <div class="reader-head">
+        <div><span class="section-kicker">YOUR READING SPACE</span><h2 id="bookTitle">Now reading</h2><p id="bookAuthor"></p></div>
+        <div class="reader-actions">
+          <a class="btn btn-secondary" id="openPdf" href="#" target="_blank" rel="noopener">Open in new tab ↗</a>
+          <a class="btn btn-primary" id="downloadPdf" href="#" download>↓ Download PDF</a>
+          <button class="btn btn-secondary" id="closeReader" type="button">Close ×</button>
+        </div>
+      </div>
+      <div id="pdfArea"><div class="reader-placeholder"><div><strong>📘 Choose a book to start reading</strong>Select “Read book” on any book card. Its PDF will appear here.</div></div></div>
+    </section>
+  </main>
+
+  <footer id="about">
+    <div class="footer-logo">📚  MY Personal  BookSpace 😏 </div>
+    <p>Your personal digital reading library.</p>
+    <p>Read curious. Learn continuously. Grow confidently.</p>
+    <p>© <span id="year"></span> BookSpace. All rights reserved.</p>
+    <a class="back-top" href="#">Back to top ↑</a>
+  </footer>
+
+  <script>
+    // Add or edit books here. Keep your PDF files inside the "pdfs" folder.
+    // Optional cover images can be placed in the "images" folder.
+    const books = [
+      { id:"java", title:"Java Programming", author:"BookSpace Library", category:"Programming",
+        description:"Learn Java programming from basic concepts to advanced topics.",
+        cover:"images/java.jpg", emoji:"☕", color:"linear-gradient(135deg,#e97843,#f5b36c)", pdf:"pdfs/java.pdf" },
+      { id:"aws", title:"AWS Cloud Computing", author:"BookSpace Library", category:"Cloud Computing",
+        description:"Learn AWS services, cloud infrastructure and deployment.",
+        cover:"images/aws.jpg", emoji:"☁️", color:"linear-gradient(135deg,#315c9d,#56b4d7)", pdf:"pdfs/aws.pdf" },
+      { id:"python", title:"Python Programming", author:"BookSpace Library", category:"Programming",
+        description:"A beginner-friendly guide to Python programming.",
+        cover:"images/python.jpg", emoji:"🐍", color:"linear-gradient(135deg,#287f91,#70c6b0)", pdf:"pdfs/python.pdf" },
+      { id:"linux", title:"Linux Administration", author:"BookSpace Library", category:"Operating Systems",
+        description:"Learn Linux commands, administration and server management.",
+        cover:"images/linux.jpg", emoji:"🐧", color:"linear-gradient(135deg,#55428d,#a18be0)", pdf:"pdfs/linux.pdf" }
+    ];
+
+    const bookGrid = document.getElementById("bookGrid");
+    const searchInput = document.getElementById("searchInput");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const noBooks = document.getElementById("noBooks");
+    const bookCount = document.getElementById("bookCount");
+
+    function displayBooks() {
+      const search = searchInput.value.trim().toLowerCase();
+      const category = categoryFilter.value;
+      const filtered = books.filter(book =>
+        (book.title.toLowerCase().includes(search) ||
+         book.author.toLowerCase().includes(search) ||
+         book.description.toLowerCase().includes(search)) &&
+        (category === "all" || book.category === category)
+      );
+
+      bookGrid.innerHTML = "";
+      filtered.forEach(book => {
+        const card = document.createElement("article");
+        card.className = "book-card";
+
+        const coverWrap = document.createElement("div");
+        coverWrap.className = "cover-wrap";
+        coverWrap.style.background = book.color;
+
+        const emoji = document.createElement("div");
+        emoji.className = "cover-emoji";
+        emoji.textContent = book.emoji;
+        coverWrap.appendChild(emoji);
+
+        // If a local cover image exists, show it instead of the illustrated cover.
+        if (book.cover) {
+          const img = document.createElement("img");
+          img.src = book.cover;
+          img.alt = book.title + " cover";
+          img.style.cssText = "position:absolute;inset:0;width:100%;height:100%;object-fit:cover";
+          img.onerror = () => img.remove();
+          coverWrap.appendChild(img);
+        }
+
+        const info = document.createElement("div");
+        info.className = "book-info";
+        const badge = document.createElement("span");
+        badge.className = "category";
+        badge.textContent = book.category;
+        const title = document.createElement("h3");
+        title.textContent = book.title;
+        const author = document.createElement("p");
+        author.className = "author";
+        author.textContent = "By " + book.author;
+        const desc = document.createElement("p");
+        desc.className = "description";
+        desc.textContent = book.description;
+
+        const actions = document.createElement("div");
+        actions.className = "card-actions";
+        const read = document.createElement("button");
+        read.className = "btn btn-primary";
+        read.type = "button";
+        read.textContent = "Read book";
+        read.addEventListener("click", () => openBook(book.id));
+        const download = document.createElement("a");
+        download.className = "btn btn-secondary";
+        download.textContent = "↓ PDF";
+        download.href = book.pdf;
+        download.download = "";
+        actions.append(read, download);
+        info.append(badge, title, author, desc, actions);
+        card.append(coverWrap, info);
+        bookGrid.appendChild(card);
+      });
+
+      bookCount.textContent = filtered.length + (filtered.length === 1 ? " Book" : " Books");
+      noBooks.style.display = filtered.length ? "none" : "block";
+    }
+
+    function openBook(id) {
+      const book = books.find(item => item.id === id);
+      if (!book) return;
+      document.getElementById("bookTitle").textContent = book.title;
+      document.getElementById("bookAuthor").textContent = "By " + book.author + " · " + book.category;
+      document.getElementById("openPdf").href = book.pdf;
+      document.getElementById("downloadPdf").href = book.pdf;
+      document.getElementById("downloadPdf").setAttribute("download", id + ".pdf");
+
+      const area = document.getElementById("pdfArea");
+      area.innerHTML = "";
+      const frame = document.createElement("iframe");
+      frame.className = "pdf-frame";
+      frame.title = book.title + " PDF reader";
+      frame.src = book.pdf;
+      area.appendChild(frame);
+
+      const reader = document.getElementById("readerSection");
+      reader.classList.add("show");
+      reader.scrollIntoView({ behavior:"smooth", block:"start" });
+    }
+
+    searchInput.addEventListener("input", displayBooks);
+    categoryFilter.addEventListener("change", displayBooks);
+    document.getElementById("closeReader").addEventListener("click", () => {
+      document.getElementById("readerSection").classList.remove("show");
+      document.getElementById("pdfArea").innerHTML =
+        '<div class="reader-placeholder"><div><strong>📘 Choose a book to start reading</strong>Select “Read book” on any book card. Its PDF will appear here.</div></div>';
+    });
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Hero slideshow: changes automatically every 3 seconds.
+    const slides = [...document.querySelectorAll(".slide")];
+    const dotsBox = document.getElementById("slideDots");
+    let currentSlide = 0;
+    let slideTimer;
+    slides.forEach((_, index) => {
+      const dot = document.createElement("button");
+      dot.className = "dot" + (index === 0 ? " active" : "");
+      dot.setAttribute("aria-label", "Go to slide " + (index + 1));
+      dot.addEventListener("click", () => showSlide(index, true));
+      dotsBox.appendChild(dot);
+    });
+    function showSlide(index, restartTimer = false) {
+      currentSlide = (index + slides.length) % slides.length;
+      slides.forEach((slide, i) => slide.classList.toggle("active", i === currentSlide));
+      [...dotsBox.children].forEach((dot, i) => dot.classList.toggle("active", i === currentSlide));
+      if (restartTimer) startSlideTimer();
+    }
+    function startSlideTimer() {
+      clearInterval(slideTimer);
+      slideTimer = setInterval(() => showSlide(currentSlide + 1), 5000);
+    }
+    document.getElementById("prevSlide").addEventListener("click", () => showSlide(currentSlide - 1, true));
+    document.getElementById("nextSlide").addEventListener("click", () => showSlide(currentSlide + 1, true));
+    startSlideTimer();
+    displayBooks();
+  </script>
+</body>
+</html>
